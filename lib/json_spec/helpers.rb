@@ -6,9 +6,10 @@ module JsonSpec
 
     def parse_json(json, path = nil)
       ruby = MultiJson.decode("[#{json}]").first
-      value_at_json_path(ruby, path)
-    rescue MultiJson::DecodeError
-      MultiJson.decode(json)
+      @v = value_at_json_path(ruby, path)
+      @v
+    rescue MultiJson::DecodeError => e
+      MultiJson.decode(json) rescue @v
     end
 
     def normalize_json(json, path = nil)
